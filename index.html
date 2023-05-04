@@ -52,7 +52,7 @@
 
       <div class="bground">
         <div class="content">
-          <span class="close"></span>
+          <span class="close-btn"></span>
           <div class="modal-body">
             <form
               id="form"
@@ -60,7 +60,9 @@
               action="index.html"
               method="get"
               onsubmit="return validate();">
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Veuillez entrer 2 caractères ou plus pour le champ du prénom.">
                 <label for="first">Prénom</label><br />
                 <input
                   class="text-control"
@@ -68,7 +70,9 @@
                   id="first"
                   name="first" /><br />
               </div>
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Veuillez entrer 2 caractères ou plus pour le champ du nom.">
                 <label for="last">Nom</label><br />
                 <input
                   class="text-control"
@@ -76,7 +80,9 @@
                   id="last"
                   name="last" /><br />
               </div>
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Veuillez entrer un e-mail valide">
                 <label for="email">E-mail</label><br />
                 <input
                   class="text-control"
@@ -84,7 +90,9 @@
                   id="email"
                   name="email" /><br />
               </div>
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Veuillez entrer votre date de naissance">
                 <label for="birthdate">Date de naissance</label><br />
                 <input
                   class="text-control"
@@ -92,7 +100,7 @@
                   id="birthdate"
                   name="birthdate" /><br />
               </div>
-              <div class="formData">
+              <div class="formData" data-error="Veuillez entrer un nombre">
                 <label for="quantity"
                   >À combien de tournois GameOn avez-vous déjà participé
                   ?</label
@@ -108,7 +116,7 @@
               <p class="text-label">
                 A quel tournoi souhaitez-vous participer cette année ?
               </p>
-              <div class="formData">
+              <div class="formData" data-error="Vous devez choisir une option">
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -171,11 +179,14 @@
                 >
               </div>
 
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Vous devez vérifier que vous acceptez les termes et conditions.">
                 <input
                   class="checkbox-input"
                   type="checkbox"
                   id="checkbox1"
+                  name="conditions"
                   checked />
                 <label class="checkbox2-label" for="checkbox1">
                   <span class="checkbox-icon"></span>

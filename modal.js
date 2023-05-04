@@ -11,14 +11,14 @@ function editNav() {
 const modalbg = document.querySelector('.bground');
 const modalBtn = document.querySelectorAll('.modal-btn');
 const formData = document.querySelectorAll('.formData');
-const modalExit = document.querySelector('.close');
-let form = document.querySelector('#form');
+const modalExit = document.querySelectorAll('.close-btn');
+const form = document.querySelector('#form');
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener('click', launchModal));
 
 // close modal event
-modalExit.addEventListener('click', closeModal);
+modalExit.forEach((btn) => btn.addEventListener('click', closeModal));
 
 // launch modal form
 function launchModal() {
@@ -31,85 +31,161 @@ function closeModal() {
   modalbg.style.display = 'none';
 }
 
-// REGEX
+// REGEX Text
 
-// NOM et Prénom
-let regexName = new RegExp('^[a-zA-ZÀ-Ÿà-ÿ-s]{2,}$', 'g');
+let regexText = new RegExp('^[a-zA-ZÀ-Ÿà-ÿ-s]{2,}$');
+
+// Fonction
+
+const validInputText = function (inputText) {
+  let isTextValid = regexText.test(inputText.value);
+  inputText
+    .closest('.formData')
+    .setAttribute('data-error-visible', !isTextValid);
+  return isTextValid;
+};
 // Prénom
 
-form.first.addEventListener('change', function () {
-  validFirstName(this);
+form.first.addEventListener('keyup', function () {
+  validInputText(this);
 });
-
-const validFirstName = function (inputFirstName) {
-  let testFirstName = regexName.test(inputFirstName.value);
-
-  let formData = document.querySelector('.formData');
-  if (!testFirstName) {
-    formData.setAttribute('data-error-visible', 'true');
-    formData.setAttribute(
-      'data-error',
-      'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
-    );
-  } else {
-    formData.removeAttribute('data-error-visible', 'true');
-    formData.removeAttribute(
-      'data-error',
-      'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
-    );
-  }
-};
 
 // Nom
 
-form.last.addEventListener('change', function () {
-  validLastName(this);
+form.last.addEventListener('keyup', function () {
+  validInputText(this);
 });
 
-const validLastName = function (inputLastName) {
-  let testLastName = regexName.test(inputLastName.value);
+// REGEX Email
 
-  let formData = document.querySelector('.formData');
-  if (!testLastName) {
-    formData.nextElementSibling.setAttribute('data-error-visible', 'true');
-    formData.nextElementSibling.setAttribute(
-      'data-error',
-      'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
-    );
-  } else {
-    formData.nextElementSibling.removeAttribute('data-error-visible', 'true');
-    formData.nextElementSibling.removeAttribute(
-      'data-error',
-      'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
-    );
-  }
+let regexEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$');
+
+// Fonction
+
+const validEmail = function (inputEmail) {
+  let isEmailValid = regexEmail.test(inputEmail.value);
+  inputEmail
+    .closest('.formData')
+    .setAttribute('data-error-visible', !isEmailValid);
+  return isEmailValid;
 };
 
 // E-mail
 
-// REGEX
-
-let regexEmail = new RegExp('^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$');
-
-form.email.addEventListener('change', function () {
+form.email.addEventListener('keyup', function () {
   validEmail(this);
 });
 
-const validEmail = function (inputEmail) {
-  let testEmail = regexEmail.test(inputEmail.value);
+// REGEX Number
 
-  let formData = document.querySelector('.formData');
-  if (!testEmail) {
-    formData.nextElementSibling.setAttribute('data-error-visible', 'true');
-    formData.nextElementSibling.setAttribute(
-      'data-error',
-      'Veuillez entrer un e-mail valide'
-    );
-  } else {
-    formData.nextElementSibling.removeAttribute('data-error-visible', 'true');
-    formData.nextElementSibling.removeAttribute(
-      'data-error',
-      'Veuillez entrer un e-mail valide'
-    );
-  }
+let regexNumber = new RegExp('^[0-9-/]+$');
+
+// Fonction
+
+const validNumber = function (inputNumber) {
+  let isNumberValid = regexNumber.test(inputNumber.value);
+  inputNumber
+    .closest('.formData')
+    .setAttribute('data-error-visible', !isNumberValid);
+  return isNumberValid;
 };
+
+// Date de Naissance
+
+form.birthdate.addEventListener('keyup', function () {
+  validNumber(this);
+});
+form.birthdate.addEventListener('change', function () {
+  validNumber(this);
+});
+
+// Tournois
+
+form.quantity.addEventListener('keyup', function () {
+  validNumber(this);
+});
+form.quantity.addEventListener('change', function () {
+  validNumber(this);
+});
+
+// Localisation
+
+const radioChecked = function (inputRadio) {
+  let isRadioChecked = inputRadio.checked;
+
+  inputRadio
+    .closest('.formData')
+    .setAttribute('data-error-visible', !isRadioChecked);
+  return isRadioChecked;
+};
+
+// Conditions
+
+const conditionsChecked = function (inputConditions) {
+  let isConditionsChecked = inputConditions.checked;
+  inputConditions
+    .closest('.formData')
+    .setAttribute('data-error-visible', !isConditionsChecked);
+  return isConditionsChecked;
+};
+
+form.checkbox1.addEventListener('change', function () {
+  conditionsChecked(this.name);
+});
+
+// VALIDATION
+
+// form.addEventListener('submit', function (e) {
+//   e.preventDefault();
+// });
+
+function validate() {
+  let result = Boolean(
+    validInputText(form.first) &&
+      validInputText(form.last) &&
+      validEmail(form.email) &&
+      validNumber(form.birthdate) &&
+      validNumber(form.quantity) &&
+      (radioChecked(form.location1) ||
+        radioChecked(form.location2) ||
+        radioChecked(form.location3) ||
+        radioChecked(form.location4) ||
+        radioChecked(form.location5) ||
+        radioChecked(form.location6)) &&
+      conditionsChecked(form.checkbox1)
+  );
+
+  if (result) {
+    success();
+  }
+
+  return false;
+}
+
+function success(e) {
+  let modalBdy = document.querySelector('.modal-body');
+  let newContent = document.createElement('div');
+  let newButton = document.createElement('button');
+
+  modalBdy.appendChild(newContent);
+  modalBdy.appendChild(newButton);
+
+  newContent.classList.add('confirmation');
+  newContent.textContent = 'Merci pour votre inscription';
+  newButton.classList.add('boutonFermer');
+  newButton.classList.add('btn');
+  newButton.textContent = 'Fermer';
+
+  let modalClose = document.querySelector('.boutonFermer');
+  modalClose.addEventListener('click', closeModal);
+  modalClose.addEventListener('click', addAnimation);
+
+  function addAnimation() {
+    modalbg.classList.add('closeAnimation');
+  }
+
+  form.style.height = '0';
+  form.reset();
+}
+
+//let isFormInvalid = document.querySelector('.formData[data-type=list] .input:checked').length > 0;

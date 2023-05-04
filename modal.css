@@ -170,10 +170,14 @@ main {
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
 }
+.bground .closeAnimation {
+  animation: modalclose;
+}
 
 .content {
   margin: 5% auto;
   width: 100%;
+  height: 100%;
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
@@ -186,8 +190,32 @@ main {
 }
 
 .modal-body {
+  display: flex;
+  justify-content: center;
   padding: 15px 8%;
   margin: 15px auto;
+}
+.confirmation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #232323;
+  position: absolute;
+}
+.boutonFermer {
+  background: #fe142f;
+  position: absolute;
+  bottom: 0;
+  margin: 5% auto;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 12px 82px;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  animation: modalclose 1s 1 forwards;
 }
 
 label {
@@ -298,7 +326,7 @@ input {
   left: 21%;
   top: 19%;
 }
-.close {
+.close-btn {
   position: absolute;
   right: 15px;
   top: 15px;
@@ -307,9 +335,11 @@ input {
   opacity: 1;
   cursor: pointer;
   transform: scale(0.7);
+  z-index: 2;
+  animation: modalclose 1s 1 ease forwards;
 }
-.close:before,
-.close:after {
+.close-btn:before,
+.close-btn:after {
   position: absolute;
   left: 15px;
   content: ' ';
@@ -317,10 +347,10 @@ input {
   width: 3px;
   background-color: #fff;
 }
-.close:before {
+.close-btn:before {
   transform: rotate(45deg);
 }
-.close:after {
+.close-btn:after {
   transform: rotate(-45deg);
 }
 .btn-submit,
@@ -524,6 +554,15 @@ footer {
   from {
     opacity: 0;
     transform: translateY(-150px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes modalclose {
+  from {
+    opacity: 0;
+    transform: translateY(150px);
   }
   to {
     opacity: 1;
