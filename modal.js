@@ -23,11 +23,18 @@ modalExit.forEach((btn) => btn.addEventListener('click', closeModal));
 // launch modal form
 function launchModal() {
   modalbg.style.display = 'block';
+  form.style.display = 'block';
 }
 
 // close modal form
 
 function closeModal() {
+  let confirm = document.querySelector('.confirmation');
+  let bouton = document.querySelector('.boutonFermer');
+  try {
+    document.querySelector('.modal-body').removeChild(confirm);
+    document.querySelector('.modal-body').removeChild(bouton);
+  } catch {}
   modalbg.style.display = 'none';
 }
 
@@ -140,20 +147,35 @@ form.checkbox1.addEventListener('change', function () {
 // });
 
 function validate() {
-  let result = Boolean(
-    validInputText(form.first) &&
-      validInputText(form.last) &&
-      validEmail(form.email) &&
-      validNumber(form.birthdate) &&
-      validNumber(form.quantity) &&
-      (radioChecked(form.location1) ||
-        radioChecked(form.location2) ||
-        radioChecked(form.location3) ||
-        radioChecked(form.location4) ||
-        radioChecked(form.location5) ||
-        radioChecked(form.location6)) &&
-      conditionsChecked(form.checkbox1)
-  );
+  // let result = Boolean(
+  //   validInputText(form.first) &&
+  //     validInputText(form.last) &&
+  //     validEmail(form.email) &&
+  //     validNumber(form.birthdate) &&
+  //     validNumber(form.quantity) &&
+  //     (radioChecked(form.location1) ||
+  //       radioChecked(form.location2) ||
+  //       radioChecked(form.location3) ||
+  //       radioChecked(form.location4) ||
+  //       radioChecked(form.location5) ||
+  //       radioChecked(form.location6)) &&
+  //     conditionsChecked(form.checkbox1)
+  // );
+
+  let result = [
+    validInputText(form.first),
+    validInputText(form.last),
+    validEmail(form.email),
+    validNumber(form.birthdate),
+    validNumber(form.quantity),
+    radioChecked(form.location1) ||
+      radioChecked(form.location2) ||
+      radioChecked(form.location3) ||
+      radioChecked(form.location4) ||
+      radioChecked(form.location5) ||
+      radioChecked(form.location6),
+    conditionsChecked(form.checkbox1),
+  ].every(Boolean);
 
   if (result) {
     success();
@@ -177,6 +199,7 @@ function success(e) {
   newButton.textContent = 'Fermer';
 
   let modalClose = document.querySelector('.boutonFermer');
+
   modalClose.addEventListener('click', closeModal);
   modalClose.addEventListener('click', addAnimation);
 
@@ -184,7 +207,7 @@ function success(e) {
     modalbg.classList.add('closeAnimation');
   }
 
-  form.style.height = '0';
+  form.style.display = 'none';
   form.reset();
 }
 
