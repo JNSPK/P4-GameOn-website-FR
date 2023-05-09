@@ -5,6 +5,7 @@ function editNav() {
   } else {
     x.className = 'topnav';
   }
+  modalbg.style.display = 'none';
 }
 
 // DOM Elements
@@ -23,7 +24,6 @@ modalExit.forEach((btn) => btn.addEventListener('click', closeModal));
 // launch modal form
 function launchModal() {
   modalbg.style.display = 'block';
-  form.style.display = 'block';
 }
 
 // close modal form
@@ -56,10 +56,17 @@ const validInputText = function (inputText) {
 form.first.addEventListener('keyup', function () {
   validInputText(this);
 });
+form.first.addEventListener('change', function () {
+  validInputText(this);
+});
 
 // Nom
 
 form.last.addEventListener('keyup', function () {
+  validInputText(this);
+});
+
+form.last.addEventListener('change', function () {
   validInputText(this);
 });
 
@@ -80,6 +87,9 @@ const validEmail = function (inputEmail) {
 // E-mail
 
 form.email.addEventListener('keyup', function () {
+  validEmail(this);
+});
+form.email.addEventListener('change', function () {
   validEmail(this);
 });
 
@@ -142,11 +152,9 @@ form.checkbox1.addEventListener('change', function () {
 
 // VALIDATION
 
-// form.addEventListener('submit', function (e) {
-//   e.preventDefault();
-// });
-
 function validate() {
+  // Première itération
+
   // let result = Boolean(
   //   validInputText(form.first) &&
   //     validInputText(form.last) &&
@@ -161,6 +169,8 @@ function validate() {
   //       radioChecked(form.location6)) &&
   //     conditionsChecked(form.checkbox1)
   // );
+
+  // Deuxième itération
 
   let result = [
     validInputText(form.first),
@@ -195,19 +205,13 @@ function success(e) {
   newContent.classList.add('confirmation');
   newContent.textContent = 'Merci pour votre inscription';
   newButton.classList.add('boutonFermer');
-  newButton.classList.add('btn');
+
   newButton.textContent = 'Fermer';
 
   let modalClose = document.querySelector('.boutonFermer');
 
   modalClose.addEventListener('click', closeModal);
-  modalClose.addEventListener('click', addAnimation);
 
-  function addAnimation() {
-    modalbg.classList.add('closeAnimation');
-  }
-
-  form.style.display = 'none';
   form.reset();
 }
 

@@ -68,7 +68,7 @@ img {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   .topnav a {
     display: none;
   }
@@ -78,7 +78,7 @@ img {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   .topnav.responsive {
     position: relative;
   }
@@ -101,12 +101,11 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
   }
 }
 
 main {
-  font-size: 130%;
+  font-size: 120%;
   font-weight: bolder;
   color: black;
   padding-top: 0.5vw;
@@ -165,19 +164,14 @@ main {
   z-index: 1;
   left: 0;
   top: 0;
-  height: 100%;
   width: 100%;
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
 }
-.bground .closeAnimation {
-  animation: modalclose;
-}
 
 .content {
-  margin: 5% auto;
+  margin: 2% auto;
   width: 100%;
-  height: 100%;
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
@@ -203,6 +197,7 @@ main {
   height: 100%;
   background: #232323;
   position: absolute;
+  top: 0;
 }
 .boutonFermer {
   background: #fe142f;
@@ -257,11 +252,6 @@ input {
   border: 2px solid #e54858;
 }
 
-/* .input[data-error]::after {
-  content: attr(data-error);
-  font-size: 0.4em;
-  color: red;
-} */
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -336,7 +326,6 @@ input {
   cursor: pointer;
   transform: scale(0.7);
   z-index: 2;
-  animation: modalclose 1s 1 ease forwards;
 }
 .close-btn:before,
 .close-btn:after {
@@ -511,7 +500,28 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
+  .content {
+    max-width: none;
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  label {
+    margin-bottom: 2%;
+  }
+  .modal-body {
+    margin: 0;
+    height: 90svh;
+  }
+
   .hero-section {
     display: block;
     box-shadow: unset;
