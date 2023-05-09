@@ -146,7 +146,7 @@ const conditionsChecked = function (inputConditions) {
   return isConditionsChecked;
 };
 
-form.checkbox1.addEventListener('change', function () {
+form.conditions.addEventListener('change', function () {
   conditionsChecked(this.name);
 });
 
@@ -194,7 +194,7 @@ function validate() {
   return false;
 }
 
-function success(e) {
+function success() {
   let modalBdy = document.querySelector('.modal-body');
   let newContent = document.createElement('div');
   let newButton = document.createElement('button');
@@ -214,5 +214,3 @@ function success(e) {
 
   form.reset();
 }
-
-//let isFormInvalid = document.querySelector('.formData[data-type=list] .input:checked').length > 0;
