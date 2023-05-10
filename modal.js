@@ -38,111 +38,95 @@ function closeModal() {
   modalbg.style.display = 'none';
 }
 
-// REGEX Text
+// REGEX
+
+// Text
 
 let regexText = new RegExp('^[a-zA-ZÀ-Ÿà-ÿ-s]{2,}$');
 
-// Fonction
-
-const validInputText = function (inputText) {
-  let isTextValid = regexText.test(inputText.value);
-  inputText
-    .closest('.formData')
-    .setAttribute('data-error-visible', !isTextValid);
-  return isTextValid;
-};
-// Prénom
-
-form.first.addEventListener('keyup', function () {
-  validInputText(this);
-});
-form.first.addEventListener('change', function () {
-  validInputText(this);
-});
-
-// Nom
-
-form.last.addEventListener('keyup', function () {
-  validInputText(this);
-});
-
-form.last.addEventListener('change', function () {
-  validInputText(this);
-});
-
-// REGEX Email
+// Email
 
 let regexEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$');
 
-// Fonction
-
-const validEmail = function (inputEmail) {
-  let isEmailValid = regexEmail.test(inputEmail.value);
-  inputEmail
-    .closest('.formData')
-    .setAttribute('data-error-visible', !isEmailValid);
-  return isEmailValid;
-};
-
-// E-mail
-
-form.email.addEventListener('keyup', function () {
-  validEmail(this);
-});
-form.email.addEventListener('change', function () {
-  validEmail(this);
-});
-
-// REGEX Number
+// Number
 
 let regexNumber = new RegExp('^[0-9-/]+$');
 
-// Fonction
+// Date
 
-const validNumber = function (inputNumber) {
-  let isNumberValid = regexNumber.test(inputNumber.value);
-  inputNumber
-    .closest('.formData')
-    .setAttribute('data-error-visible', !isNumberValid);
+let regexDate = new RegExp('^[0-9-/]+$');
+
+// Fonction
+// Prénom
+// Nom
+
+const validText = function (formData) {
+  let isTextValid = regexText.test(
+    formData.querySelector('input[type=text]').value
+  );
+
+  formData.setAttribute('data-error-visible', !isTextValid);
+  return isTextValid;
+};
+
+// Fonction
+// E-mail
+
+const validEmail = function (formData) {
+  let isEmailValid = regexEmail.test(
+    formData.querySelector('input[type=email]').value
+  );
+  formData.setAttribute('data-error-visible', !isEmailValid);
+  return isEmailValid;
+};
+
+// Fonction
+// Date de Naissance
+const validDate = function (formData) {
+  let isDateValid = regexDate.test(
+    formData.querySelector('input[type=date]').value
+  );
+  formData.setAttribute('data-error-visible', !isDateValid);
+  return isDateValid;
+};
+
+// Fonction
+// Tournois
+
+const validNumber = function (formData) {
+  let isNumberValid = regexNumber.test(
+    formData.querySelector('input[type=number]').value
+  );
+  formData.setAttribute('data-error-visible', !isNumberValid);
   return isNumberValid;
 };
 
-// Date de Naissance
-
-form.birthdate.addEventListener('keyup', function () {
-  validNumber(this);
+form.addEventListener('keyup', function (e) {
+  let formData = e.target.closest('.formData');
+  validateField(formData);
 });
-form.birthdate.addEventListener('change', function () {
-  validNumber(this);
-});
-
-// Tournois
-
-form.quantity.addEventListener('keyup', function () {
-  validNumber(this);
-});
-form.quantity.addEventListener('change', function () {
-  validNumber(this);
+form.addEventListener('change', function (e) {
+  let formData = e.target.closest('.formData');
+  validateField(formData);
 });
 
 // Localisation
 
-const radioChecked = function (inputRadio) {
-  let isRadioChecked = inputRadio.checked;
+const radioChecked = function (formData) {
+  let isRadioChecked =
+    null !== formData.querySelector('input[type=radio]:checked');
 
-  inputRadio
-    .closest('.formData')
-    .setAttribute('data-error-visible', !isRadioChecked);
+  formData.setAttribute('data-error-visible', !isRadioChecked);
   return isRadioChecked;
 };
 
 // Conditions
 
-const conditionsChecked = function (inputConditions) {
-  let isConditionsChecked = inputConditions.checked;
-  inputConditions
-    .closest('.formData')
-    .setAttribute('data-error-visible', !isConditionsChecked);
+const conditionsChecked = function (formData) {
+  let isConditionsChecked =
+    null !== formData.querySelector('input[type=checkbox]:checked');
+  formData.setAttribute('data-error-visible', !isConditionsChecked);
+  console.log(isConditionsChecked);
   return isConditionsChecked;
 };
 
@@ -152,42 +136,40 @@ form.conditions.addEventListener('change', function () {
 
 // VALIDATION
 
+// Switch
+
+function validateField(element) {
+  let validatorType = element.dataset.validator;
+  console.log(validatorType);
+
+  switch (validatorType) {
+    case 'text':
+      validText(element);
+      break;
+    case 'email':
+      validEmail(element);
+      break;
+    case 'date':
+      validDate(element);
+      break;
+    case 'number':
+      validNumber(element);
+      break;
+    case 'radio':
+      radioChecked(element);
+      break;
+    case 'checkbox':
+      conditionsChecked(element);
+      break;
+  }
+}
+
 function validate() {
-  // Première itération
+  formData.forEach((element) => {
+    validateField(element);
+  });
 
-  // let result = Boolean(
-  //   validInputText(form.first) &&
-  //     validInputText(form.last) &&
-  //     validEmail(form.email) &&
-  //     validNumber(form.birthdate) &&
-  //     validNumber(form.quantity) &&
-  //     (radioChecked(form.location1) ||
-  //       radioChecked(form.location2) ||
-  //       radioChecked(form.location3) ||
-  //       radioChecked(form.location4) ||
-  //       radioChecked(form.location5) ||
-  //       radioChecked(form.location6)) &&
-  //     conditionsChecked(form.checkbox1)
-  // );
-
-  // Deuxième itération
-
-  let result = [
-    validInputText(form.first),
-    validInputText(form.last),
-    validEmail(form.email),
-    validNumber(form.birthdate),
-    validNumber(form.quantity),
-    radioChecked(form.location1) ||
-      radioChecked(form.location2) ||
-      radioChecked(form.location3) ||
-      radioChecked(form.location4) ||
-      radioChecked(form.location5) ||
-      radioChecked(form.location6),
-    conditionsChecked(form.checkbox1),
-  ].every(Boolean);
-
-  if (result) {
+  if (!document.querySelector('.formData:is([data-error-visible=true])')) {
     success();
   }
 
