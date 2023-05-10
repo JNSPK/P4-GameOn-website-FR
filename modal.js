@@ -130,10 +130,6 @@ const conditionsChecked = function (formData) {
   return isConditionsChecked;
 };
 
-form.conditions.addEventListener('change', function () {
-  conditionsChecked(this.name);
-});
-
 // VALIDATION
 
 // Switch
