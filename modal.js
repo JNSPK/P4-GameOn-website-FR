@@ -126,7 +126,7 @@ const conditionsChecked = function (formData) {
   let isConditionsChecked =
     null !== formData.querySelector('input[type=checkbox]:checked');
   formData.setAttribute('data-error-visible', !isConditionsChecked);
-  console.log(isConditionsChecked);
+
   return isConditionsChecked;
 };
 
@@ -140,7 +140,6 @@ form.conditions.addEventListener('change', function () {
 
 function validateField(element) {
   let validatorType = element.dataset.validator;
-  console.log(validatorType);
 
   switch (validatorType) {
     case 'text':
